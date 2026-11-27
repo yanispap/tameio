@@ -1,0 +1,30 @@
+name: Πρόβλημα / Bug
+description: Κάτι δεν δουλεύει / Something doesn't work
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Μη βάλεις tokens, cookies, email ή παραγγελίες σου εδώ.** / **Don't paste tokens, cookies, emails or your orders here.**
+  - type: dropdown
+    id: area
+    attributes:
+      label: Πού; / Where?
+      options: [Συνδέσεις / Connections, Έξοδα / Spending, Μαγαζιά / Stores, Σύγκριση / Compare, Wrapped, Άλλο / Other]
+    validations: { required: true }
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Πλατφόρμα / Platform
+      options: [e-food, Wolt, Box, Όλες / All, Καμία / None]
+  - type: textarea
+    id: what
+    attributes:
+      label: Τι έγινε; / What happened?
+      description: Τι περίμενες και τι είδες, και το μήνυμα λάθους αν υπάρχει. / What you expected, what you saw, and any error message.
+    validations: { required: true }
+  - type: input
+    id: env
+    attributes:
+      label: Σύστημα / Environment
+      placeholder: macOS 15, Chrome 131, Node 22

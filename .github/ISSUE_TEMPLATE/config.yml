@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Πρόβλημα ασφαλείας / Security issue
+    url: https://github.com/yanispap/tameio/security/advisories/new
+    about: Ιδιωτικά, όχι σε δημόσιο issue / Privately, not in a public issue

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tameio</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="awning">
+    <div class="bar">
+      <div class="brand"><img src="logo.svg" alt="" width="28" height="28">Tameio</div>
+      <div class="views" role="tablist" aria-label="Σελίδα"><button data-view="spend" aria-selected="true">Έξοδα</button><button data-view="stores" aria-selected="false">Μαγαζιά</button><button data-view="compare" aria-selected="false">Σύγκριση</button><button data-view="wrapped" aria-selected="false">Wrapped</button></div>
+      <nav class="controls">
+        <div class="seg" role="tablist" aria-label="Πλατφόρμα" id="platforms"></div>
+        <select id="year" aria-label="Χρονιά"></select>
+        <button class="pill" id="open-sources" aria-haspopup="dialog">Συνδέσεις</button>
+        <button class="pill icon" id="theme" aria-label="Αλλαγή θέματος"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" fill="currentColor"/></svg></button>
+      </nav>
+    </div>
+    <div class="hero" id="hero"></div>
+    <nav class="periods" id="periods" aria-label="Περίοδος"></nav>
+  </header>
+
+  <main id="main">
+    <section class="strip" id="kpis" aria-label="Συνοπτικά"></section>
+
+    <section class="panel">
+      <div class="panel-head"><h2 id="chart-title">Ανά μήνα</h2><div class="legend" id="legend"></div></div>
+      <div id="months" class="chart"></div>
+    </section>
+
+    <div class="cols">
+      <section class="panel"><div class="panel-head"><h2>Τα μαγαζιά σου</h2></div><ol id="shops" class="rank"></ol></section>
+      <section class="panel"><div class="panel-head"><h2>Αυτά που παίρνεις συνέχεια</h2></div><ol id="products" class="rank"></ol></section>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Πώς άλλαξαν οι τιμές</h2><div class="seg light" role="tablist" aria-label="Σύγκριση τιμών" id="price-mode"><button data-pm="all" aria-selected="true">Σε όλα τα μαγαζιά</button><button data-pm="shop" aria-selected="false">Στο ίδιο μαγαζί</button></div></div>
+      <div id="prices"></div>
+    </section>
+
+    <section class="panel"><div class="panel-head"><h2>Πότε πεινάς</h2></div><div id="heat" class="when"></div></section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Όλες οι παραγγελίες</h2><input id="search" type="search" placeholder="Μαγαζί ή πιάτο" aria-label="Αναζήτηση"></div>
+      <div class="table-wrap"><table id="orders"><thead><tr><th>Πότε</th><th>Μαγαζί</th><th>Τι πήρες</th><th class="r">Ποσό</th></tr></thead><tbody></tbody></table></div>
+    </section>
+  </main>
+
+  <section id="stores-view" class="stores-view" hidden></section>
+  <section id="wrapped-view" class="stores-view" hidden></section>
+  <section id="compare-view" class="stores-view" hidden></section>
+
+  <dialog id="store-dialog" aria-label="Μαγαζί"><div class="store-sheet"></div></dialog>
+
+  <dialog id="sources-dialog" aria-labelledby="sources-title">
+    <div class="sheet">
+      <div class="sheet-head"><h2 id="sources-title">Συνδέσεις</h2><button class="pill icon" id="close-sources" aria-label="Κλείσιμο"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <p class="sheet-sub">Συνέδεσε τους λογαριασμούς σου για να έρθουν οι παραγγελίες σου εδώ. Μένουν στον υπολογιστή σου. Κωδικούς δεν κρατάμε ποτέ. Κρατάμε μόνο τις συνδέσεις (sessions) στον φάκελο <code>data/</code>, και τις σβήνεις όποτε θες.</p>
+      <div id="sources"></div>
+    </div>
+  </dialog>
+
+  <footer class="foot" id="foot"></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

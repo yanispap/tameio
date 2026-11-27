@@ -1,0 +1,10 @@
+{
+  "name": "tameio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local dashboard for your e-food, Wolt and Box order history.",
+  "scripts": { "start": "node server.js", "test": "node test.mjs" },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

@@ -1,0 +1,16 @@
+name: Ιδέα / Feature idea
+description: Κάτι που θα έκανε το Tameio καλύτερο / Something that would make Tameio better
+labels: [idea]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Η ιδέα / The idea
+      description: Τι θα ήθελες να κάνει και γιατί σου χρειάζεται. / What you'd like it to do and why you need it.
+    validations: { required: true }
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Βοήθεια / Help
+      options:
+        - label: Θα ήθελα να το φτιάξω εγώ / I'd like to build it myself
