@@ -108,7 +108,7 @@ Everyone connects **their own** accounts. Tameio ships with no account, key or t
 
 | Platform | How | What it keeps |
 | --- | --- | --- |
-| **e-food** | Enter your email and password under **Συνδέσεις**. They go only to e-food, through the server on your computer. | The session, for menus. Never the password. |
+| **e-food** | Enter your email and password under **Συνδέσεις**. They go only to e-food, through the server on your computer. After that, **Ανανέωση** (Refresh) brings in new orders in one click. | The session, for menus and Refresh. Never the password. |
 | **Wolt** | Drag the **Tameio sync** button to your bookmarks bar, open wolt.com while logged in, and click it. | Nothing. Optionally, automatic sync with the `__wtoken` cookie. |
 | **Box** | The same **Tameio sync** button, clicked on box.gr after you've picked an address. | The shops in your area, for the Stores page. |
 | **Any** | Upload a JSON file of your order list (e.g. captured with Proxyman). Tameio detects which platform it's from. | Only the orders. |
@@ -146,7 +146,7 @@ Only in the `data/` folder on your computer, which never goes into git:
 | File | Contents |
 | --- | --- |
 | `orders.json` | your orders, in a simple format |
-| `efood-session.json` | the e-food session (not the password), for menus |
+| `efood-session.json` | the e-food session (not the password), for menus and Refresh |
 | `wolt-session.json` | the Wolt session, only if you turn on automatic sync |
 | `box-shops.json` | the Box shops Tameio sync brought in |
 | `location.json` | the point to search shops around, if you clicked "use my location" |
@@ -182,6 +182,18 @@ Only a little terminal: install Node.js, run the three [install](#-install) comm
 <summary><b>Does it work on Windows, macOS and Linux?</b></summary>
 
 Yes, anywhere Node 20+ runs, with any modern browser (Chrome, Safari, Firefox, Edge).
+</details>
+
+<details>
+<summary><b>How do I bring in new orders?</b></summary>
+
+Under **Συνδέσεις** (Connections):
+
+- **e-food:** click **Ανανέωση** (Refresh). It brings in new orders in one click, with the session it kept the first time. If that session has expired, it asks for your email and password again.
+- **Wolt:** click **Tameio sync** while on wolt.com. If you turned on automatic sync, it brings them in by itself when you open Tameio.
+- **Box:** click **Tameio sync** while on box.gr.
+
+New orders are added to the ones you have, with no duplicates.
 </details>
 
 <details>
