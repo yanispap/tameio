@@ -52,15 +52,29 @@ async function efoodSession({ email, password, session }) {
 const EFOOD_SESSION = join(ROOT, 'data', 'efood-session.json');
 async function efoodSaved() { try { return JSON.parse(await readFile(EFOOD_SESSION, 'utf8')).session; } catch { return null; } }
 
+// With no email and password, Ανανέωση uses the saved session; if e-food no longer accepts it, it is dropped and the form asks again.
 async function syncEfood(creds) {
+  const saved = !creds.email && !creds.password && !creds.session ? await efoodSaved() : null;
+  if (saved) {
+    try { return await efoodHistory(saved); } catch (e) {
+      if (e.status !== 401) throw e;
+      await rm(EFOOD_SESSION, { force: true });
+      throw new UserError('Η σύνδεση με το e-food έληξε. Βάλε ξανά email και κωδικό.', 401);
+    }
+  }
   const session = await efoodSession(creds);
   await mkdir(join(ROOT, 'data'), { recursive: true, mode: 0o700 });
   await writeFile(EFOOD_SESSION, JSON.stringify({ session }), { mode: 0o600 });
+  return efoodHistory(session);
+}
+
+async function efoodHistory(session) {
   const all = [];
   for (let offset = 0, page = 0; page < 100; page++) {
     const u = new URL('https://api.e-food.gr/api/v1/user/orders/history');
     u.search = new URLSearchParams({ limit: '100', offset: String(offset), mode: 'extended' });
     const body = await getJson(u, { 'x-core-session-id': session }, 'e-food');
+    if (body?.error_code === 'authentication_error') throw new UserError('Το e-food δεν δέχτηκε τη σύνδεση.', 401);
     const data = body?.data;
     if (!Array.isArray(data?.orders)) throw new UserError('Το e-food έστειλε απάντηση που δεν αναγνωρίζω.', 502);
     all.push(...data.orders);

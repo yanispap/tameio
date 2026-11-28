@@ -75,14 +75,17 @@ function apply(d) {
   state.meta = d.meta ?? {};
 }
 
-async function sync(p, form) {
-  const creds = Object.fromEntries(new FormData(form));
+// Without a form (e-food's one-click Ανανέωση) the server uses the saved session.
+async function sync(p, form = null) {
+  const creds = form ? Object.fromEntries(new FormData(form)) : {};
   state.busy[p] = true; state.errors[p] = null; renderSources();
   try {
     apply(await api(`/api/sync/${p}`, { method: 'POST', body: JSON.stringify(creds) }));
     state.open = null;
   } catch (e) {
     state.errors[p] = e.message;
+    // The saved session expired: show the form so they can sign in again.
+    if (!form && e.status === 401) { state.efoodSession = false; state.open = p; }
   }
   state.busy[p] = false;
   render();
@@ -561,7 +564,8 @@ document.addEventListener('click', (e) => {
   const start = e.target.closest('[data-start]');
   if (start) { state.open = start.dataset.start; openSources(); dialog.querySelector('[data-form] input')?.focus(); }
   const open = e.target.closest('[data-open]');
-  if (open) { state.open = open.dataset.open; renderSources(); dialog.querySelector('[data-form] input')?.focus(); }
+  if (open && open.dataset.open === 'efood' && state.efoodSession) sync('efood');
+  else if (open) { state.open = open.dataset.open; renderSources(); dialog.querySelector('[data-form] input')?.focus(); }
   if (e.target.closest('[data-close]')) { state.open = null; renderSources(); }
   if (e.target.closest('[data-efood-off]')) { api('/api/efood/session', { method: 'DELETE' }).then(() => { state.efoodSession = false; renderSources(); }); }
   if (e.target.closest('[data-wolt-off]')) { api('/api/wolt/session', { method: 'DELETE' }).then(() => { state.woltAuto = false; renderSources(); }); }
